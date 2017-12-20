@@ -31,21 +31,23 @@ num_detections = detection_graph.get_tensor_by_name('num_detections:0')
 # ====================================================================
 # ====================================================================
 
-# image is feed
-image_np = cv2.imread("70.png")
-start_time = time.time()
+for i in range(10):
+    # image is feed
+    image_name = str(i*10) + ".png"
+    image_np = cv2.imread(image_name)
+    start_time = time.time()
 
-# =================get_classification()===============================
-# ====================================================================
-image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
-image_np_expanded = np.expand_dims(image_np, axis=0)
-# image_np_expanded = cv2.resize(image, (800, 600, 3))
-(boxes, scores, classes, num) = sess.run(
-                [detection_boxes, detection_scores, detection_classes, num_detections],
-                feed_dict={image_tensor: image_np_expanded})
-print("==========red============")
-print(scores)
-print(classes)
-print(time.time() - start_time)
-# ====================================================================
-# ====================================================================
+    # =================get_classification()===============================
+    # ====================================================================
+    image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
+    image_np_expanded = np.expand_dims(image_np, axis=0)
+    # image_np_expanded = cv2.resize(image, (800, 600, 3))
+    (boxes, scores, classes, num) = sess.run(
+                    [detection_boxes, detection_scores, detection_classes, num_detections],
+                    feed_dict={image_tensor: image_np_expanded})
+    print("======== image ", i+1, " =========")
+    print(scores[0][:5])
+    print(classes[0][:5])
+    print(time.time() - start_time)
+    # ====================================================================
+    # ====================================================================
